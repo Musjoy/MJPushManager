@@ -1,0 +1,6 @@
+use_frameworks!
+target 'MJPushManager_Tests' do
+  pod 'MJPushManager', :path => '../'
+  
+  
+end
