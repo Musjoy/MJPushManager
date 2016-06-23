@@ -1,0 +1,19 @@
+PODS:
+  - MJPushManager (0.1.0):
+    - ModuleCapability (~> 0.1.2)
+  - ModuleCapability (0.1.2)
+
+DEPENDENCIES:
+  - MJPushManager (from `../`)
+
+EXTERNAL SOURCES:
+  MJPushManager:
+    :path: ../
+
+SPEC CHECKSUMS:
+  MJPushManager: 4318eb50d1d215e9554c5c0afacb148cfa263f92
+  ModuleCapability: 35cea7154ff855362682e90ecf1be529a533c931
+
+PODFILE CHECKSUM: e2f6fe614d33d77a46336420d7296a9c5de02187
+
+COCOAPODS: 1.0.1
