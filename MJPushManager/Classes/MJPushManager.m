@@ -171,20 +171,6 @@ static MJPushManager *s_pushManager = nil;
     [self setDeviceToken:[deviceToken base64EncodedStringWithOptions:0]];
 }
 
-- (void)setDeviceToken:(NSString *)deviceToken
-{
-    if (deviceToken.length > 0) {
-        _deviceToken = deviceToken;
-#ifdef MODULE_INTERFACE_MANAGER
-        [MJInterfaceManager registerPush:deviceToken completion:^(BOOL isSucceed, NSString *message, id data) {
-            if (isSucceed) {
-                
-            }
-        }];
-#endif
-    }
-}
-
 
 #pragma mark - HandlePush
 
@@ -231,6 +217,7 @@ static MJPushManager *s_pushManager = nil;
         [aDic setObject:pushInfo.pushType forKey:@"pushType"];
         activePush.pushData = aDic;
         [self distributeThisPushWith:activePush];
+        [self pushHandled:pushInfo.pushId];
     } else {
         LogError(@"Receive Undefined Push");
     }
@@ -418,6 +405,35 @@ static MJPushManager *s_pushManager = nil;
         return _isActive;
     }
     return ([UIApplication sharedApplication].applicationState == UIApplicationStateActive);
+}
+
+
+#pragma mark - 
+
+- (void)setDeviceToken:(NSString *)deviceToken
+{
+    if (deviceToken.length > 0) {
+        _deviceToken = deviceToken;
+#ifdef MODULE_INTERFACE_MANAGER
+        [MJInterfaceManager registerPush:deviceToken completion:^(BOOL isSucceed, NSString *message, id data) {
+            if (isSucceed) {
+                
+            }
+        }];
+#endif
+    }
+}
+
+- (void)pushHandled:(NSNumber *)pushId
+{
+    if (pushId == nil) {
+        return;
+    }
+#ifdef MODULE_INTERFACE_MANAGER
+    [MJInterfaceManager pushHandled:pushId completion:^(BOOL isSucceed, NSString *message, id data) {
+        
+    }];
+#endif
 }
 
 

@@ -10,6 +10,7 @@
 
 @interface PushInfoModel : NSObject
 
+@property (nonatomic, strong) NSString *pushId;                     ///< 推送Id
 @property (nonatomic, strong) NSString *pushType;                   ///< 推送的类型
 @property (nonatomic, strong) NSString *contentIds;                 ///< 推送携带的Id，可能是任何Id，如服务Id
 @property (nonatomic, strong) NSNumber *pushToUserId;               ///< 推送针对的用户Id

@@ -14,6 +14,7 @@
 {
     self = [super init];
     if (self) {
+        self.pushId = aDic[@"pushId"];
         self.pushType = aDic[@"pushType"];
         self.contentIds = aDic[@"contentIds"];
         self.pushToUserId = aDic[@"pushToUserId"];
