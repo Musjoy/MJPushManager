@@ -31,6 +31,9 @@
 #ifdef MODULE_PROMOTION_MANAGER
 #import "PromotionManager.h"
 #endif
+#ifdef MODULE_LAUNCH_MANAGER
+#import "LaunchManager.h"
+#endif
 
 
 static MJPushManager *s_pushManager = nil;
@@ -67,7 +70,8 @@ static MJPushManager *s_pushManager = nil;
 
 @property (nonatomic, strong) NSMutableDictionary *dicUntreatedPush;    ///< 未处理的推送
 
-@property (nonatomic, assign) BOOL isInBackground;                  ///< 是否在后台
+@property (nonatomic, assign) BOOL isActive;                        ///< 是否激活
+
 
 @end
 
@@ -137,6 +141,31 @@ static MJPushManager *s_pushManager = nil;
     }
 }
 
+- (void)registerPush:(UIApplication *)application withOptions:(NSDictionary *)launchOptions
+{
+    [self registerPush:application];
+    // UIApplicationLaunchOptionsRemoteNotificationKey
+    NSDictionary *pushInfo = launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey];
+    if (pushInfo) {
+#ifdef MODULE_LAUNCH_MANAGER
+        [LaunchManager registerLaunchAction:^{
+            [self handleThisLaunchPush:pushInfo];
+        }];
+#else
+        [self performSelector:@selector(handleThisLaunchPush:) withObject:pushInfo afterDelay:3];
+#endif
+    } else {
+        _isActive = YES;
+    }
+}
+
+- (void)handleThisLaunchPush:(NSDictionary *)pushInfo
+{
+    
+    [self handleThisPush:pushInfo];
+    _isActive = YES;
+}
+
 - (void)registSucceedWith:(NSData *)deviceToken
 {
     [self setDeviceToken:[deviceToken base64EncodedStringWithOptions:0]];
@@ -181,6 +210,7 @@ static MJPushManager *s_pushManager = nil;
     
     PushHandleModel *activePush = [_activePushs objectForKey:pushInfo.pushType];
     if (activePush) {
+        NSMutableDictionary *aDic = [objectFromString(pushInfo.contentIds, nil) mutableCopy];
         if ([self appIsActive]) {
             if (pushInfo.sound.length > 0) {
                 // 播放震动
@@ -194,8 +224,9 @@ static MJPushManager *s_pushManager = nil;
                 AudioServicesCreateSystemSoundID((__bridge CFURLRef)[NSURL fileURLWithPath:soundFile], &soundID);
                 AudioServicesPlaySystemSound(soundID);
             }            
+        } else {
+            [aDic setObject:@YES forKey:@"directShow"];
         }
-        NSMutableDictionary *aDic = [objectFromString(pushInfo.contentIds, nil) mutableCopy];
         [aDic setObject:pushInfo.message forKey:@"message"];
         [aDic setObject:pushInfo.pushType forKey:@"pushType"];
         activePush.pushData = aDic;
@@ -314,13 +345,13 @@ static MJPushManager *s_pushManager = nil;
                 for (NSString *aKey in arrKeys) {
                     [[NSUserDefaults standardUserDefaults] removeObjectForKey:aKey];
                 }
-                [self alert:@"Reset value succeed"];
+                [self alert:@"Reset value succeed! Please close the application and restart it."];
             }
         } else if ([data isKindOfClass:[NSString class]]) {
             NSString *aKey = (NSString *)data;
             if (aKey.length > 0) {
                 [[NSUserDefaults standardUserDefaults] removeObjectForKey:aKey];
-                [self alert:@"Reset value succeed"];
+                [self alert:@"Reset value succeed! Please close the application and restart it."];
             }
         }
     } else if ([type isEqualToString:@"set-default"]) {
@@ -334,7 +365,7 @@ static MJPushManager *s_pushManager = nil;
                         [[NSUserDefaults standardUserDefaults] setObject:aValue forKey:aKey];
                     }
                 }
-                [self alert:@"Set default value succeed"];
+                [self alert:@"Set default value succeed! Please close the application and restart it."];
             }
         }
     }
@@ -383,6 +414,9 @@ static MJPushManager *s_pushManager = nil;
 
 - (BOOL)appIsActive
 {
+    if (!_isActive) {
+        return _isActive;
+    }
     return ([UIApplication sharedApplication].applicationState == UIApplicationStateActive);
 }
 

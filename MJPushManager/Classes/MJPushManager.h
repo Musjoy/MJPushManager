@@ -23,6 +23,8 @@
 
 - (void)registerPush:(UIApplication *)application;
 
+- (void)registerPush:(UIApplication *)application withOptions:(NSDictionary *)launchOptions;
+
 - (void)registSucceedWith:(NSData *)deviceToken;
 
 #pragma mark - HandlePush
