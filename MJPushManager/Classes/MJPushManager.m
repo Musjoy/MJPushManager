@@ -373,10 +373,10 @@ static MJPushManager *s_pushManager = nil;
     
     UINavigationController *aNavVC = nil;
     if (showInRoot) {
-        [ControllerManager popToRootViewControllerAnimated:NO];
+        [THEControllerManager popToRootViewControllerAnimated:NO];
         //        aNavVC = [ControllerManager rootNavViewController];
     } else {
-        aNavVC = [ControllerManager topNavViewController];
+        aNavVC = [THEControllerManager topNavViewController];
     }
     
     // 初始化并显示该界面
