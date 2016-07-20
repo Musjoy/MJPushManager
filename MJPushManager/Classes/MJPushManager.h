@@ -9,9 +9,9 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-/// Plist文件名设置
-#ifndef PLIST_ACTIVE_PUSHS
-#define PLIST_ACTIVE_PUSHS   @"active_pushs"
+/// 文件名设置
+#ifndef FILE_NAME_ACTIVE_PUSHS
+#define FILE_NAME_ACTIVE_PUSHS   @"active_pushs"
 #endif
 
 @interface MJPushManager : NSObject

@@ -92,7 +92,7 @@ static MJPushManager *s_pushManager = nil;
     self = [super init];
     if (self)
     {
-        NSMutableDictionary *aDic = getPlistFileData(PLIST_ACTIVE_PUSHS);
+        NSMutableDictionary *aDic = getFileData(FILE_NAME_ACTIVE_PUSHS);
         for (NSString* key in [aDic allKeys]) {
             NSDictionary *value = aDic[key];
             PushHandleModel *aPushHandle = [[PushHandleModel alloc] initWithDictionary:value];
