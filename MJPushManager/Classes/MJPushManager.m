@@ -77,7 +77,7 @@ static MJPushManager *s_pushManager = nil;
 
 @implementation MJPushManager
 
-+ (instancetype)shareInstance
++ (instancetype)sharedInstance
 {
     static dispatch_once_t once_patch;
     dispatch_once(&once_patch, ^() {
@@ -180,7 +180,7 @@ static MJPushManager *s_pushManager = nil;
     pushInfo.message = userInfo[@"aps"][@"alert"];
     
 #ifdef MODULE_USER_MANAGER
-    UserManager *theUser = [UserManager shareInstance];
+    UserManager *theUser = [UserManager sharedInstance];
     if ([pushInfo.pushToUserId intValue] != 0) {
         NSNumber *userId = [theUser getUserId];
         if (userId == nil) {
@@ -250,7 +250,7 @@ static MJPushManager *s_pushManager = nil;
     // 打开App Store
     if (handleType == ePushOpenAppStore) {
 #ifdef MODULE_PROMOTION_MANAGER
-        [[PromotionManager shareInstance] promoteApp:pushHandle.pushData];
+        [[PromotionManager sharedInstance] promoteApp:pushHandle.pushData];
 #endif
         return;
     }
@@ -262,7 +262,7 @@ static MJPushManager *s_pushManager = nil;
         if (handlerClass.length > 0 && strAction.length > 0) {
             @try {
                 Class theClass = NSClassFromString(handlerClass);
-                NSObject *theHanlder = [theClass shareInstance];
+                NSObject *theHanlder = [theClass sharedInstance];
                 [self dataByExecute:strAction target:theHanlder data:pushHandle.pushData];
             } @catch (NSException *exception) {
                 

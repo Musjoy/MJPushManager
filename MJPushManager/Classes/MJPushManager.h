@@ -17,7 +17,7 @@
 @interface MJPushManager : NSObject
 
 
-+ (instancetype)shareInstance;
++ (instancetype)sharedInstance;
 
 #pragma mark - Register
 
