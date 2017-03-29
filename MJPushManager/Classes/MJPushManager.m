@@ -380,7 +380,6 @@ static MJPushManager *s_pushManager = nil;
     }
     
     // 初始化并显示该界面
-    Class displayVC = NSClassFromString(strDisplayVC);
     UIViewController *aVC = [self.class getViewControllerWithName:strDisplayVC];
     [aVC configWithData:pushHandle.pushData];
     if (![aNavVC.topViewController isViewLoaded]) {
