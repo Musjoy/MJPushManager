@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'MJPushManager'
-  s.version          = '0.1.0'
+  s.version          = '0.1.1'
   s.summary          = 'A manager to deal with remote notification.'
 
   s.homepage         = 'https://github.com/Musjoy/MJPushManager'
