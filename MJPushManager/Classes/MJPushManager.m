@@ -10,29 +10,27 @@
 #import "PushInfoModel.h"
 #import "PushHandleModel.h"
 #import <AudioToolbox/AudioToolbox.h>
-#ifdef HEADER_CONTROLLER_MANAGER
+#ifdef  HEADER_CONTROLLER_MANAGER
 #import HEADER_CONTROLLER_MANAGER
 #endif
-#ifdef HEADER_NAVIGATION_CONTROLLER
+#ifdef  HEADER_NAVIGATION_CONTROLLER
 #import HEADER_NAVIGATION_CONTROLLER
 #endif
-#ifdef MODULE_FILE_SOURCE
-#import "FileSource.h"
-#endif
-#ifdef MODULE_USER_MANAGER
+#import HEADER_FILE_SOURCE
+#ifdef  MODULE_USER_MANAGER
 #import "UserManager.h"
 #endif
-#ifdef MODULE_INTERFACE_MANAGER
-#import "MJInterfaceManager.h"
+#ifdef  MODULE_INTERFACE_MANAGER
+#import <MJInterfaceManager/MJInterfaceManager.h>
 #endif
-#ifdef MODULE_DB_MODEL
-#import "DBModel.h"
+#ifdef  MODULE_DB_MODEL
+#import <DBModel/DBModel.h>
 #endif
-#ifdef MODULE_PROMOTION_MANAGER
-#import "PromotionManager.h"
+#ifdef  MODULE_PROMOTION_MANAGER
+#import <PromotionManager/PromotionManager.h>
 #endif
-#ifdef MODULE_LAUNCH_MANAGER
-#import "LaunchManager.h"
+#ifdef  MODULE_LAUNCH_MANAGER
+#import <LaunchManager/LaunchManager.h>
 #endif
 
 
